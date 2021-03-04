@@ -40,7 +40,7 @@ const NoteApp = () => {
   <div>
     <h1>Stock: {name} - {symbol}</h1>
     <h3>Price: {price}</h3>
-    <form onSubmit={onSubmit} method='GET'>
+    <form onSubmit={onSubmit}>
     <input type='text' value={search} onChange={(e)=>setSearch(e.target.value)}/>
     <button type='submit'>Search</button>
     </form>
