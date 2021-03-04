@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import iex from '../api/iex'
+import iex from '../../api/iex'
 
-const NoteApp = () => {
+const Navbar = () => {
   const [stock, setStock] = useState({
     name:'',
     symbol:'',
@@ -49,4 +49,4 @@ const NoteApp = () => {
   
   </>
 }
-export default NoteApp
+export default Navbar
