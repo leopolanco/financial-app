@@ -12,7 +12,8 @@ const Navbar = () => {
   const [result, setResult] = useState({})
   const searchApi = async (searchQ) => {
     try {
-      const response = await iex.get(`stock/${searchQ}/batch?types=quote`)
+      const response = await iex.get(`stock/${searchQ}/quote`)
+      console.log(response)
       setResult(response.data.quote)
       console.log('call to api')
     } catch (err) {
@@ -21,7 +22,7 @@ const Navbar = () => {
   }
 
   useEffect(() => {
-    console.log('2nd use')
+    console.log(result)
     if (result) {
       setStock({
         name: result.companyName,
