@@ -1,5 +1,6 @@
+import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import iex from '../../api/iex'
+import iex from '../../../api/iex'
 
 const Navbar = () => {
   const [stock, setStock] = useState({
@@ -11,18 +12,24 @@ const Navbar = () => {
   const [search, setSearch] = useState('')
   const [result, setResult] = useState({})
   const searchApi = async (searchQ) => {
+    searchQ = searchQ.replace(/\s/g, '')
     try {
-      const response = await iex.get(`stock/${searchQ}/quote`)
-      console.log(response)
-      setResult(response.data.quote)
-      console.log('call to api')
+      const {data, data: {symbol, latestPrice }} = await axios.get(`https://sandbox.iexapis.com/stable/stock/${searchQ}/quote`,{
+
+      params:{
+        token: process.env.REACT_APP_IEX_KEY
+      }
+      })
+      setResult(data)
+      console.log(latestPrice)
+      console.log(symbol)
+      console.log(data)
     } catch (err) {
       console.error(err)
     }
   }
 
   useEffect(() => {
-    console.log(result)
     if (result) {
       setStock({
         name: result.companyName,
@@ -39,10 +46,6 @@ const Navbar = () => {
   return (
     <>
       <div>
-        <h1>
-          Stock: {name} - {symbol}
-        </h1>
-        <h3>Price: {price}</h3>
         <form onSubmit={onSubmit}>
           <input
             type='text'
@@ -51,6 +54,10 @@ const Navbar = () => {
           />
           <button type='submit'>Search</button>
         </form>
+        <h1>
+          Stock: {name} - {symbol}
+        </h1>
+        <h3>Price: {price}</h3>
       </div>
     </>
   )
